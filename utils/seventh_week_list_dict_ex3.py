@@ -52,6 +52,12 @@ Drink_Smoothe_Frappe_Menu = {
     '초코허니퐁크러쉬': 3900
 }
 
+Drink_All_list = [
+    Drink_Coffee_Menu,
+    Drink_Tea_Menu,
+    Drink_Ade_Juice_Menu,
+    Drink_Smoothe_Frappe_Menu
+]
 
 def display_clear():
     """화면 청소"""
@@ -85,16 +91,27 @@ def display_drink_sub_menu():
     except ValueError:
         return -1  # 잘못된 문자 입력 시 예외 처리용 값 리턴
 
-
-
-def display_drink_coffee_sub_menu():
-    """커피 메뉴 목록 화면"""
-    print('#########     MGC Coffee Menu      #########')
+def display_drink_all_sub_menu(category = DISP_SUB_MENU_DRINK_COFFEE):
+    """음료 전체 서브 메뉴 목록 화면"""
+    sub_menu_cate_str = ""
     index = 1
-    coffee_menu_list = list(Drink_Coffee_Menu.items())
+    menu_list = []
     
-    for coffee, price in coffee_menu_list:
-        print(f'# {index}.\t품명: {coffee}\n# \t가격: {price}원')
+    if category == DISP_SUB_MENU_DRINK_COFFEE:
+        sub_menu_cate_str = "Coffee"
+    elif category == DISP_SUB_MENU_DRINK_TEA:
+        sub_menu_cate_str = "Tea"
+    elif category == DISP_SUB_MENU_DRINK_ADE_JUICE:
+        sub_menu_cate_str = "Ade & Juice"
+    elif category == DISP_SUB_MENU_DRINK_SMOOTHIE_FRAPPE:
+        sub_menu_cate_str = "Smoothie & Frappe"
+    
+    menu_dict = Drink_All_list[category - 1]
+    
+    print(f"#########     MGC {sub_menu_cate_str} Menu      #########")
+    
+    for item, price in menu_dict.items():
+        print(f'# {index}. \t 품명: {item}\n# \t가격: {price}원')
         index += 1
     
     print(f'# {index}. ↩️  상위 메뉴 ')
@@ -105,56 +122,8 @@ def display_drink_coffee_sub_menu():
         return {}
     
     # [버그 수정]: 올바른 상품 범위를 선택했는지 검증 (1번부터 메뉴 개수까지)
-    if 1 <= sel <= len(coffee_menu_list):
-        sel_coffee, sel_price = coffee_menu_list[sel - 1]
-        return {sel_coffee: sel_price}
-    else:
-        return {}  # 상위 메뉴 번호를 누르거나 범위 초과 시 빈 딕셔너리 반환
-
-def display_drink_tea_sub_menu():
-    """커피 메뉴 목록 화면"""
-    print('#########     MGC Tea Menu      #########')
-    index = 1
-    tea_menu_list = list(Drink_Tea_Menu.items())
-    
-    for tea, price in tea_menu_list:
-        print(f'# {index}.\t품명: {tea}\n# \t가격: {price}원')
-        index += 1
-    
-    print(f'# {index}. ↩️  상위 메뉴 ')
-    
-    try:
-        sel = int(input(f'선택해주세요(1-{index}): '))
-    except ValueError:
-        return {}
-    
-    # [버그 수정]: 올바른 상품 범위를 선택했는지 검증 (1번부터 메뉴 개수까지)
-    if 1 <= sel <= len(tea_menu_list):
-        sel_tea, sel_price = tea_menu_list[sel - 1]
-        return {sel_tea: sel_price}
-    else:
-        return {}  # 상위 메뉴 번호를 누르거나 범위 초과 시 빈 딕셔너리 반환
-
-def display_drink_ade_juice_sub_menu():
-    """커피 메뉴 목록 화면"""
-    print('#########     MGC Ade & Juice Menu      #########')
-    index = 1
-    ade_juice_menu_list = list(Drink_Ade_Juice_Menu.items())
-    
-    for item, price in ade_juice_menu_list:
-        print(f'# {index}.\t품명: {item}\n# \t가격: {price}원')
-        index += 1
-    
-    print(f'# {index}. ↩️  상위 메뉴 ')
-    
-    try:
-        sel = int(input(f'선택해주세요(1-{index}): '))
-    except ValueError:
-        return {}
-    
-    # [버그 수정]: 올바른 상품 범위를 선택했는지 검증 (1번부터 메뉴 개수까지)
-    if 1 <= sel <= len(ade_juice_menu_list):
-        sel_item, sel_price = ade_juice_menu_list[sel - 1]
+    if 1 <= sel <= len(menu_dict):
+        sel_item, sel_price = list(menu_dict.items())[sel-1]
         return {sel_item: sel_price}
     else:
         return {}  # 상위 메뉴 번호를 누르거나 범위 초과 시 빈 딕셔너리 반환
@@ -212,24 +181,14 @@ def main():
             while True:  # 음료 서브메뉴 루프
                 display_clear()
                 sel_sub_menu = display_drink_sub_menu()
-                
-                if sel_sub_menu == DISP_SUB_MENU_DRINK_COFFEE:
-                    display_clear()
-                    last_sel_product = display_drink_coffee_sub_menu()
-                    if last_sel_product:  # 상품이 정상 선택되었다면 서브메뉴 루프 탈출 후 결제로
-                        break
 
-                elif sel_sub_menu == DISP_SUB_MENU_DRINK_TEA:
-                    display_clear()
-                    last_sel_product = display_drink_tea_sub_menu()
-                    if last_sel_product:
-                        break
-                        
-                elif sel_sub_menu == DISP_SUB_MENU_DRINK_ADE_JUICE:
-                    display_clear()
-                    last_sel_product = display_drink_ade_juice_sub_menu()
-                    if last_sel_product:
-                        break
+                if DISP_SUB_MENU_DRINK_COFFEE <= sel_sub_menu and \
+                        sel_sub_menu <= DISP_SUB_MENU_DRINK_ADE_JUICE :
+                      display_clear()
+                      last_sel_product = display_drink_all_sub_menu(sel_sub_menu)
+                      
+                      if last_sel_product:
+                          break
 
                 elif sel_sub_menu == DISP_SUB_MENU_DRINK_BACK:
                     break  # 상위 메뉴로 돌아가기
