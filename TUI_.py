@@ -62,7 +62,7 @@ class DigitalClockApp(App):
         yield Header(show_clock=False)
         
         with Container(id="clock-container"):
-            yield Static("⏱️ DIGITAL CLOCK SYSTEM", id="title-zone")
+            yield Static("⏱️ DIGITAL CLOCK SYSTEM   ", id="title-zone")
             # 초깃값을 지정하여 Digits 및 Static 위젯 생성
             yield Digits("00:00:00", id="time-display")
             yield Static("2026-00-00", id="date-display")
