@@ -1,0 +1,15 @@
+[
+  {
+    "st_name": "우훈제",
+    "st_id": 2025,
+    "st_phone_num": "010-3600-2307",
+    "class_": "ECO마더팩토리",
+    "Korean": 90.0,
+    "English": 80.0,
+    "Math": 80.0,
+    "Social": 85.0,
+    "Science": 98.0,
+    "Avg": 86.6,
+    "grade": "B+"
+  }
+]
