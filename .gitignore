@@ -38,6 +38,9 @@ venv.bak/
 # Jupyter Notebook
 .ipynb_checkpoints
 
+# Student records
+week_examples/save_record/
+
 # ==========================================
 # Environment Variables & Secrets (보안 파일)
 # ==========================================
