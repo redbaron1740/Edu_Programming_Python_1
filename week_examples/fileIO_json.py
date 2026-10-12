@@ -1,5 +1,26 @@
-
 import json
+
+def save_json(file_path, data):
+    """
+    with 문을 사용하지 않고 open()과 close()로 JSON 파일을 저장하는 함수
+    """
+    fp = None
+    try:
+        # 1. 파일 열기 (쓰기 모드)
+        fp = open(file_path, "w", encoding="utf-8")
+        
+        # 2. JSON 데이터 쓰기
+        json.dump(data, fp, ensure_ascii=False, indent=4)
+        print(f"[{file_path}] 파일이 성공적으로 저장되었습니다.")
+        
+    except Exception as e:
+        print(f"저장 실패: {e}")
+        
+    finally:
+        # 3. 파일 닫기 (예외가 발생해도 반드시 실행)
+        if fp is not None:
+            fp.close()
+
 
 def load_json(file_path):
     """
@@ -27,9 +48,18 @@ def load_json(file_path):
             fp.close()
 
 def main():
+    student_info = {
+        "student_id": 2026001,
+        "name": "김철수",
+        "major": "소프트웨어공학과",
+        "is_enrolled": True,
+        "subjects": ["Python", "ROS2", "Embedded"]
+    }
+    
     file_path = "student.json"
 
     # 파일 저장 및 불러오기 실행
+    save_json(file_path, student_info)
     loaded_data = load_json(file_path)
 
     if loaded_data:
