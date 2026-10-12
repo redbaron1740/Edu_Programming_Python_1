@@ -1,0 +1,11 @@
+{
+    "student_id": 2026001,
+    "name": "김철수",
+    "major": "소프트웨어공학과",
+    "is_enrolled": true,
+    "subjects": [
+        "Python",
+        "ROS2",
+        "Embedded"
+    ]
+}
